@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2026_02_23_215036) do
+ActiveRecord::Schema[8.0].define(version: 2026_02_24_000000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "postgis"
@@ -21,5 +21,6 @@ ActiveRecord::Schema[8.0].define(version: 2026_02_23_215036) do
     t.float "area"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_fields_on_name", unique: true
   end
 end
