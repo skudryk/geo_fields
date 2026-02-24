@@ -1,6 +1,6 @@
 # Geo Fields
 
-A Rails 8 based  SPA for managing agricultural fields. 
+A Ruby On Rails based  SPA for managing agricultural fields. 
 Users can draw field outlines on an interactive map powered by Leaflet ; 
 the app stores multi-polygon geometry in PostGIS and calculates area automatically.
 
