@@ -1,3 +1,8 @@
 <% content_for :title, "Edit #{@field.name}" %>
+<% content_for :breadcrumbs do %>
+  <li class="breadcrumb-item"><%= link_to "GeoFields", fields_path %></li>
+  <li class="breadcrumb-item"><%= link_to @field.name, field_path(@field) %></li>
+  <li class="breadcrumb-item active" aria-current="page">Edit</li>
+<% end %>
 <h2>Edit Field: <%= @field.name %></h2>
 <%= render "form", field: @field %>

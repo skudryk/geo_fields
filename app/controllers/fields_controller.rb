@@ -39,7 +39,7 @@ class FieldsController < ApplicationController
 
   def respond_with_notice(respond: true)
     action_status = I18n.t("actions.#{params[:action]}")
-    flash[:notice] = "Field #{action_status}."
+    flash[:notice] = "Geo Field #{action_status}."
     respond_with @field if respond
   end
 
