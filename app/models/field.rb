@@ -5,6 +5,15 @@ class Field < ApplicationRecord
 
   before_save :calculate_area
 
+  def as_json(_options = {})
+    {
+      id:    id,
+      name:  name,
+      area:  area,
+      shape: shape ? JSON.parse(shape_geo_json) : nil
+    }
+  end
+
   def shape_geo_json
     return nil unless shape
 

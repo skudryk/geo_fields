@@ -1,0 +1,5 @@
+de:
+  actions:
+    update: "aktualisiert"
+    create: "erstellt"
+    destroy: "gelöscht"

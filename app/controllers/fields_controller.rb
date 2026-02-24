@@ -1,63 +1,47 @@
 class FieldsController < ApplicationController
+  respond_to :html, :json
+
   before_action :set_field, only: %i[show edit update destroy]
   before_action :authenticate_api!, if: -> { request.format.json? }
 
   def index
     @fields = Field.all
-    respond_to do |format|
-      format.html
-      format.json { render json: fields_json(@fields) }
-    end
+    respond_with @fields
   end
 
   def show
-    respond_to do |format|
-      format.html
-      format.json { render json: field_json(@field) }
-    end
+    respond_with @field
   end
 
   def new
     @field = Field.new
+    respond_with @field
   end
 
-  def edit; end
+  def edit
+    respond_with @field
+  end
 
   def create
     @field = Field.new(field_params)
-
-    respond_to do |format|
-      if @field.save
-        format.html { redirect_to @field, notice: "Field created." }
-        format.json { render json: field_json(@field), status: :created }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: { errors: @field.errors }, status: :unprocessable_entity }
-      end
-    end
+    respond_with_notice(respond: @field.save)
   end
 
   def update
-    respond_to do |format|
-      if @field.update(field_params)
-        format.html { redirect_to @field, notice: "Field updated." }
-        format.json { render json: field_json(@field) }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: { errors: @field.errors }, status: :unprocessable_entity }
-      end
-    end
+    respond_with_notice(respond: @field.update(field_params))
   end
 
   def destroy
-    @field.destroy
-    respond_to do |format|
-      format.html { redirect_to fields_path, notice: "Field deleted." }
-      format.json { head :no_content }
-    end
+    respond_with_notice(respond: @field.destroy)
   end
 
   private
+
+  def respond_with_notice(respond: true)
+    action_status = I18n.t("actions.params[:action]")
+    flash[:notice] = "Field #{action_status}."
+    respond_with @field if respond
+  end
 
   def set_field
     @field = Field.find(params[:id])
@@ -83,18 +67,5 @@ class FieldsController < ApplicationController
     return if client_id == valid_id && client_secret == valid_secret
 
     render json: { error: "Unauthorized" }, status: :unauthorized
-  end
-
-  def fields_json(fields)
-    fields.map { |f| field_json(f) }
-  end
-
-  def field_json(field)
-    {
-      id:    field.id,
-      name:  field.name,
-      area:  field.area,
-      shape: field.shape ? JSON.parse(field.shape_geo_json) : nil
-    }
   end
 end

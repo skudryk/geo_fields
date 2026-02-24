@@ -16,6 +16,7 @@ gem "stimulus-rails"
 
 gem "activerecord-postgis-adapter"
 gem "rgeo-geojson"
+gem "responders"
 
 gem "solid_cache"
 gem "solid_queue"
