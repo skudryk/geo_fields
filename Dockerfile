@@ -16,11 +16,6 @@ RUN apt-get update -qq && \
       postgresql-client && \
     rm -rf /var/lib/apt/lists /var/cache/apt/archives
 
-# Install Node.js 20.x
-RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - && \
-    apt-get install --no-install-recommends -y nodejs && \
-    rm -rf /var/lib/apt/lists /var/cache/apt/archives
-
 ENV BUNDLE_PATH="/usr/local/bundle"
 
 COPY Gemfile Gemfile.lock ./
