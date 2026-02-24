@@ -6,6 +6,7 @@ gem "rails", "~> 8.0.3"
 gem "propshaft"
 
 gem "pg", "~> 1.1"
+gem "activerecord-postgis-adapter"
 
 gem "puma", ">= 5.0"
 # Use JavaScript with ESM import maps [https://github.com/rails/importmap-rails]
@@ -14,8 +15,9 @@ gem "importmap-rails"
 gem "turbo-rails"
 gem "stimulus-rails"
 
-gem "activerecord-postgis-adapter"
+
 gem "rgeo-geojson"
+
 gem "responders"
 
 gem "solid_cache"
