@@ -1,0 +1,56 @@
+<% content_for :title, "All Geo Fields" %>
+
+<div class="row">
+  <div class="col-md-5">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <h2 class="mb-0">Available GEO Fields</h2>
+    </div>
+
+    <% if @fields.empty? %>
+      <p class="text-muted">No Geo fields defined yet. <%= link_to "Create one", new_field_path %>.</p>
+    <% else %>
+      <table class="table table-hover table-sm">
+        <thead class="table-success">
+          <tr>
+            <th>Name</th>
+            <th>Area (ha)</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @fields.each do |field| %>
+            <tr>
+              <td><%= link_to field.name, field_path(field) %></td>
+              <td><%= field.area ? "#{field.area} ha" : "—" %></td>
+              <td class="text-end">
+                <div class="d-flex justify-content-end gap-1">
+                  <%= link_to edit_field_path(field),
+                        class: "btn btn-sm btn-outline-secondary",
+                        title: "Edit" do %>
+                    <i class="bi bi-pencil-square"></i>
+                  <% end %>
+                  <%= button_to field_path(field), method: :delete,
+                        class: "btn btn-sm btn-outline-danger",
+                        title: "Delete",
+                        form: { data: { turbo_confirm: "Delete Geo Field #{field.name}?" } } do %>
+                    <i class="bi bi-trash"></i>
+                  <% end %>
+                </div>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    <% end %>
+  </div>
+
+  <div class="col-md-7">
+    <div id="index-map" style="height:480px; border:1px solid #ccc; border-radius:4px;"
+         data-controller="field-map"
+         data-field-map-mode-value="index"
+         data-field-map-fields-value="<%= @fields.map { |f|
+           { id: f.id, name: f.name, geojson: f.shape ? JSON.parse(f.shape_geo_json) : nil }
+         }.to_json %>">
+    </div>
+  </div>
+</div>

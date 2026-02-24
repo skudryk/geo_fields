@@ -1,0 +1,29 @@
+<% content_for :title, @field.name %>
+
+<div class="row">
+  <div class="col-md-4">
+    <h2><%=  @field.name %></h2>
+    <dl class="row mt-3">
+      <dt class="col-sm-4">Area</dt>
+      <dd class="col-sm-8"><%= @field.area ? "#{@field.area} ha" : "—" %></dd>
+
+      <dt class="col-sm-4">Geo JSON</dt>
+      <dd class="col-sm-8">
+        <pre class="bg-light p-2 rounded" style="font-size:0.7rem;max-height:200px;overflow:auto;"><%= @field.shape ? JSON.pretty_generate(JSON.parse(@field.shape_geo_json)) : "—" %></pre>
+      </dd>
+    </dl>
+
+    <div class="mt-3 d-flex gap-2">
+      <%= link_to "✏️ Edit", edit_field_path(@field), class: "btn btn-outline-secondary" %>
+      <%= link_to "← Back", fields_path, class: "btn btn-outline-primary" %>
+    </div>
+  </div>
+
+  <div class="col-md-8">
+    <div id="show-map" style="height:480px; border:1px solid #ccc; border-radius:4px;"
+         data-controller="field-map"
+         data-field-map-mode-value="show"
+         data-field-map-geojson-value="<%= @field.shape_geo_json %>">
+    </div>
+  </div>
+</div>

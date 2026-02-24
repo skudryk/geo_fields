@@ -1,0 +1,41 @@
+<div class="row">
+  <div class="col-md-4">
+    <%= form_with model: field, class: "mb-3" do |f| %>
+      <% if field.errors.any? %>
+        <div class="alert alert-danger">
+          <ul class="mb-0">
+            <% field.errors.full_messages.each do |msg| %>
+              <li><%= msg %></li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
+
+      <div class="mb-3">
+        <%= f.label :name, class: "form-label fw-semibold" %>
+        <%= f.text_field :name, class: "form-control", required: true %>
+      </div>
+
+      <%= f.hidden_field :shape_geo_json, id: "shape_geo_json_input",
+            value: field.shape_geo_json %>
+
+      <p class="text-muted small">Draw or edit the Geo field outline on the map →</p>
+
+      <div class="d-flex gap-2">
+        <%= f.submit field.new_record? ? "Create Field" : "Update Field",
+              class: "btn btn-success" %>
+        <%= link_to "Cancel", fields_path, class: "btn btn-outline-secondary" %>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="col-md-8">
+    <div id="draw-map" style="height:500px; border:1px solid #ccc; border-radius:4px;"
+         data-controller="field-map"
+         data-field-map-mode-value="draw"
+         data-field-map-geojson-value="<%= field.shape_geo_json %>"
+         data-field-map-input-id-value="shape_geo_json_input">
+    </div>
+    <p class="text-muted small mt-1">Use the toolbar to draw the Geo field polygon. Click the last point to finish.</p>
+  </div>
+</div>
