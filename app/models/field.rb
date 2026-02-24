@@ -1,6 +1,7 @@
 class Field < ApplicationRecord
-  validates :name, presence: true
+  validates :name, presence: true, uniqueness: true
   validates :shape, presence: true
+  validate :shape_does_not_overlap_existing_fields
 
   before_save :calculate_area
 
@@ -11,6 +12,14 @@ class Field < ApplicationRecord
   end
 
   private
+
+  def shape_does_not_overlap_existing_fields
+    return unless shape
+
+    if FieldOverlapChecker.new(self).overlaps?
+      errors.add(:shape, "overlaps with an existing field")
+    end
+  end
 
   def calculate_area
     return unless shape
