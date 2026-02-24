@@ -19,5 +19,6 @@ test:
 production:
   <<: *default
   database: geo_fields_production
+  url: <%= ENV['POSTGIS_DATABASE_URL'] %>
   username: <%= ENV["DB_USERNAME"] %>
   password: <%= ENV["DB_PASSWORD"] %>
