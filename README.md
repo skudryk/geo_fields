@@ -2,7 +2,8 @@
 
 A Ruby On Rails based  SPA for managing agricultural fields. 
 Users can draw field outlines on an interactive map powered by Leaflet ; 
-the app stores multi-polygon geometry in PostGIS and calculates area automatically.
+the app stores multi-polygon geometry in PostGIS and calculates area automatically
+with checking for overlap, containment and crossing conflicts with existed field outlines.
 
 <img width="1421" height="616" alt="image" src="https://github.com/user-attachments/assets/d8023ef9-5187-4004-be0f-385175fbc98d" />
 

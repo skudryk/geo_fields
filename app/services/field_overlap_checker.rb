@@ -5,7 +5,7 @@ class FieldOverlapChecker
     @field = field
   end
 
-  # ST_Intersects covers next types of intrssection: overlap, containment, and crossing.
+  # ST_Intersects covers next types of intersection: overlap, containment, and crossing.
   def overlapping_fields
     return Field.none unless field.shape
 
