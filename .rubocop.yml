@@ -1,18 +1,274 @@
-inherit_gem:
-  rubocop-rails-omakase: rubocop.yml
+require:
+  - rubocop-performance
+  - rubocop-rails
 
 AllCops:
-  TargetRubyVersion: 3.2
+  DisplayCopNames: true
+  TargetRubyVersion: 3.2.1
   NewCops: enable
   Exclude:
-    - "db/schema.rb"
-    - "db/migrate/**/*"
-    - "bin/**/*"
-    - "vendor/**/*"
-    - "node_modules/**/*"
+    - db/schema.rb
+    - bin/**
+    - vendor/**/*
+    - Gemfile
+    - Gemfile.lock
+    - tmp/**/*
+    - db/data_schema.rb
 
-Style/FrozenStringLiteralComment:
+Rails:
+  Enabled: true
+
+Layout/LineLength:
+  Max: 120
+  AutoCorrect: true
+
+
+Layout/MultilineHashBraceLayout:
+  EnforcedStyle: symmetrical
+
+Layout/HashAlignment:
+  Enabled: true
+
+Layout/ParameterAlignment:
+  Enabled: true
+
+Lint/SafeNavigationChain:
+  Enabled: true
+  AllowedMethods:
+    - presence
+    - present?
+    - blank?
+    - nil?
+
+Lint/SymbolConversion:
   Enabled: false
 
+Layout/MultilineMethodCallIndentation:
+  Enabled: true
+  EnforcedStyle: indented
+
+Lint/MissingSuper:
+  Enabled: false
+
+Lint/AmbiguousBlockAssociation:
+  Exclude:
+    - 'spec/**/*'
+
+
+Metrics/BlockLength:
+  AllowedMethods: ['describe', 'context']
+  CountAsOne: ['array', 'hash']
+  Max: 265 # Length of code block in karafka.rb
+  Exclude:
+    - 'config/environments/*.rb'
+    - 'config/routes.rb'
+    - 'db/migrate/*'
+
+Metrics/CyclomaticComplexity:
+  Enabled: false
+
+Metrics/PerceivedComplexity:
+  Enabled: false
+
+Metrics/ParameterLists:
+  Max: 6
+
+Metrics/MethodLength:
+  CountAsOne: ['array', 'hash', 'heredoc']
+  Max: 45
+  Exclude:
+    - 'db/migrate/*'
+    - 'db/data/*'
+
+Metrics/ClassLength:
+  CountAsOne: ['array', 'hash', 'heredoc']
+  Max: 345
+
+Metrics/ModuleLength:
+  CountAsOne: ['array', 'hash', 'heredoc']
+  Exclude:
+    - 'app/lib/types.rb'
+
+Metrics/AbcSize:
+  CountRepeatedAttributes: false
+  Max: 80
+
+Naming/AccessorMethodName:
+  Enabled: true
+
+Naming/PredicateName:
+  Enabled: true
+
+Style/MissingRespondToMissing:
+  Enabled: true
+
+Style/DoubleNegation:
+  Enabled: true
+
+Style/EmptyMethod:
+  Enabled: true
+
+Style/StringLiteralsInInterpolation:
+  Enabled: true
+
+Style/GuardClause:
+  Enabled: true
+
+Style/FormatStringToken:
+  Enabled: true
+
+Style/SafeNavigation:
+  Enabled: true
+
+Style/IfUnlessModifier:
+  Enabled: true
+
 Style/Documentation:
+  Enabled: false
+
+Style/RedundantBegin:
+  Enabled: true
+
+Style/AsciiComments:
+  Enabled: true
+
+Style/ArgumentsForwarding:
+  Enabled: false
+
+Style/HashLikeCase:
+  Enabled: false
+
+Style/RaiseArgs:
+  AllowedCompactTypes: ['ApplicationJob::RetriableError']
+
+Style/ClassAndModuleChildren:
+  Enabled: false
+
+Rails/UnknownEnv:
+  Environments:
+    - test
+    - development
+    - production
+
+Rails/NotNullColumn:
+  Enabled: false
+
+Rails/HasAndBelongsToMany:
+  Enabled: true
+
+Rails/ApplicationRecord:
+  Enabled: true
+  Exclude:
+    - 'db/migrate/*'
+
+Rails/SkipsModelValidations:
+  Enabled: true
+  AllowedMethods:
+    - upsert_all
+    - insert_all
+    - insert_all!
+  Exclude:
+    - 'db/migrate/*'
+    - 'db/data/*'
+
+Rails/FindEach:
+  Enabled: false
+
+Rails/FindBy:
+  Enabled: false
+
+Rails/SelectMap:
+  Enabled: false
+
+Rails/RedundantActiveRecordAllMethod:
+  Enabled: true
+  Exclude:
+    - 'db/migrate/*'
+    - 'db/data/*'
+
+RSpec/NestedGroups:
+  Enabled: true
+  Max: 8
+
+RSpec/MultipleMemoizedHelpers:
+  AllowSubject: true
+  Max: 10
+
+RSpec/ExampleLength:
+  Enabled: true
+  Max: 50
+
+RSpec/MultipleExpectations:
+  Enabled: true
+  Max: 2
+
+RSpec/ExampleWording:
+  Enabled: false
+
+RSpec/MessageChain:
+  Enabled: false
+
+Performance/MethodObjectAsBlock:
+  Enabled: false
+
+Performance/StringIdentifierArgument:
+  Enabled: false
+
+RSpec/BeEq:
+  Enabled: false
+
+RSpec:
+  Language:
+    ExampleGroups:
+      Regular:
+        - path
+        - post
+        - put
+        - get
+        - delete
+    Examples:
+      Regular:
+        - response
+
+Rails/MigrationClassName:
+  Enabled: false
+
+RSpec/VerifiedDoubleReference:
+  Enabled: false
+
+Style/FetchEnvVar:
+  Enabled: false
+
+RSpec/Rails/HaveHttpStatus:
+  Enabled: false
+
+Rails/DeprecatedActiveModelErrorsMethods:
+  Enabled: false
+
+RSpec/NoExpectationExample:
+  Enabled: true
+  Exclude:
+    - 'spec/rswag/*'
+
+RSpec/AnyInstance:
+  Enabled: true
+
+Style/HashEachMethods:
+  Enabled: false
+
+RSpec/IndexedLet:
+  Enabled: false
+
+Rails/ThreeStateBooleanColumn:
+  Enabled: false
+
+FactoryBot/FactoryAssociationWithStrategy:
+  Enabled: false
+
+RSpec/MetadataStyle:
+  Enabled: true
+  Exclude:
+    - 'spec/**/*'
+
+FactoryBot/ExcessiveCreateList:
   Enabled: false
